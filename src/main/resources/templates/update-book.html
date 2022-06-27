@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Updating books</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5 mb-5">
+    <h3>Updating the book</h3>
+    <form method="post">
+        <div th:each="book:${books}">
+        <input type="text" th:value="${book.name}" name="name" placeholder="Enter the name of the book" class="form-control"> <br>
+        <input type="text" th:value="${book.author}" name="author" placeholder="Enter the author of the book" class="form-control"> <br>
+        <input type="text" th:value="${book.description}" name="description" placeholder="Enter the description of the book" class="form-control"><br>
+        <textarea name="maintext"  placeholder="Enter the full text of the book" class="form-control" th:text="${book.maintext}"/><button type="submit" class="btn btn-success">Update the book</button>
+    </form>
+</div>
+</div>
+
+
+
+</body>
+</html>

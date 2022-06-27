@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>List of the books</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+
+
+<div class="container">
+
+    <h3>List of books</h3> <br>
+    <button class="btn btn-success"><a href="books/add" style="color:white;">Add new book</a></button>
+    <hr/>
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Main text</th>
+            <th>Read more</th>
+            <th>Action1</th>
+            <th>Action2</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book: ${books}">
+            <td th:text="${book.id}" />
+            <td th:text="${book.name}" />
+            <td th:text="${book.author}" />
+            <td th:text="${book.description}" />
+            <td th:text="${book.maintext}" />
+            <td>
+                <a th:href="'/books/' + ${book.id}" class="btn btn-success">READ MORE</a>
+            </td>
+            <td>
+                <a th:href="'/books/' + ${book.id} + '/update'" class="btn btn-success">UPDATE</a>
+            </td>
+            <td>
+                <a th:href="'/books/' + ${book.id} + '/update'" class="btn btn-success">DELETE</a>
+            </td>
+
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+</body>
+</html>
