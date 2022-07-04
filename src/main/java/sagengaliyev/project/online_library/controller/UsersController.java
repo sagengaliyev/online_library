@@ -1,15 +1,10 @@
 package sagengaliyev.project.online_library.controller;
 
-import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import sagengaliyev.project.online_library.dto.UsersDTO;
-import sagengaliyev.project.online_library.models.UsersModel;
-import sagengaliyev.project.online_library.repository.UsersRepository;
+import sagengaliyev.project.online_library.model.User;
 import sagengaliyev.project.online_library.service.UsersService;
 
 import java.util.List;
@@ -27,7 +22,7 @@ public class UsersController {
 
     @GetMapping("/register")
     public String getRegisterPage(Model model){
-        model.addAttribute("registerRequest", new UsersModel());
+        model.addAttribute("registerRequest", new User());
         return "register-page";
     }
 //    @PostMapping("/register")

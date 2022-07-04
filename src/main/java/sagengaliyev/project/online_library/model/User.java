@@ -1,10 +1,10 @@
-package sagengaliyev.project.online_library.models;
+package sagengaliyev.project.online_library.model;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="users")
-public class UsersModel {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
@@ -17,15 +17,15 @@ public class UsersModel {
     @Column(name="Password")
     private String password;
 
-    public UsersModel() {
+    public User() {
     }
 
-    public UsersModel(String login, String password) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public UsersModel(String firstName, String lastName, String login, String password) {
+    public User(String firstName, String lastName, String login, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;

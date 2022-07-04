@@ -1,5 +1,6 @@
-package sagengaliyev.project.online_library;
+package sagengaliyev.project.online_library.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sagengaliyev.project.online_library.dto.BooksDTO;
-import sagengaliyev.project.online_library.models.Book;
+import sagengaliyev.project.online_library.exception.BooksException;
+import sagengaliyev.project.online_library.model.Book;
 import sagengaliyev.project.online_library.repository.BookRepository;
 import sagengaliyev.project.online_library.service.BooksService;
 
@@ -17,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 public class BooksController {
+
 
     private final BookRepository bookRepo;
     private final BooksService booksService;
@@ -36,39 +40,26 @@ public class BooksController {
 
     @GetMapping("/allbooks")
     public ResponseEntity<List<BooksDTO>> getAllBooks(){
+        log.info("Get a list of books");
         return new ResponseEntity<>(booksService.getAllBooks(), HttpStatus.OK);
     }
-//    @GetMapping("/books/{id}")
-//    public ResponseEntity<String> fullBookInfo(@PathVariable(value = "id") long id, Model model){
-////        if(!bookRepo.existsById(id)){
-////            return "redirect:/books";
-////        }
-//
-//        Optional<Book> book = bookRepo.findById(id);
-//        ArrayList <Book> res = new ArrayList<>();
-//        book.ifPresent(res::add);
-//        model.addAttribute("book", res);
-//        ResponseEntity<ArrayList<Book>> arrayListResponseEntity = new ResponseEntity<>(res, HttpStatus.OK);
-//        return new ResponseEntity<>(ArrayList<book>, HttpStatus.OK);
-//    }
+
     @GetMapping("/books/add")
     public String addBook(Model model){
         return "add-book";
     }
 
     @PostMapping("/books/add")
-    public String addNewBook(@RequestParam String name,@RequestParam String author,@RequestParam String description,@RequestParam String maintext){
+    public ResponseEntity<String> addNewBook(@RequestParam String name,@RequestParam String author,@RequestParam String description,@RequestParam String maintext){
         Book book = new Book(name, author,description,maintext);
         bookRepo.save(book);
-        return "redirect:/books";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/books/{id}/delete")
-    public ResponseEntity<List<Book>> deleteBook(@PathVariable(value = "id") long id, Model model) {
-        if (booksService.deleteBook(book)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<Book>> deleteBook(@PathVariable(value = "id") long id, Model model) throws BooksException {
+        booksService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
     @GetMapping("/books/{id}/update")
     public String updateBook(@PathVariable(value = "id") long id, Model model){

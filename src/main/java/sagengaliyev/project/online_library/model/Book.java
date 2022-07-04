@@ -1,4 +1,4 @@
-package sagengaliyev.project.online_library.models;
+package sagengaliyev.project.online_library.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
