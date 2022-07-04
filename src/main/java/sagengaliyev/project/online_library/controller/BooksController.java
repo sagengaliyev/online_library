@@ -63,10 +63,12 @@ public class BooksController {
         return "redirect:/books";
     }
     @PostMapping("/books/{id}/delete")
-    public String deleteBook(@PathVariable(value = "id") long id, Model model){
-        Book book = bookRepo.findById(id).orElseThrow();
-        bookRepo.delete(book);
-        return "redirect:/books";
+    public ResponseEntity<List<Book>> deleteBook(@PathVariable(value = "id") long id, Model model) {
+        if (booksService.deleteBook(book)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/books/{id}/update")
     public String updateBook(@PathVariable(value = "id") long id, Model model){
