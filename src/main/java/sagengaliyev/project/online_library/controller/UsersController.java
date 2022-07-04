@@ -7,18 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sagengaliyev.project.online_library.dto.UsersDTO;
 import sagengaliyev.project.online_library.models.UsersModel;
 import sagengaliyev.project.online_library.repository.UsersRepository;
 import sagengaliyev.project.online_library.service.UsersService;
 
+import java.util.List;
+
 @Controller
 public class UsersController {
 
-    private final UsersRepository usersRepository;
+
     private final UsersService usersService;
 
-    public UsersController(UsersRepository usersRepository, UsersService usersService) {
-        this.usersRepository = usersRepository;
+    public UsersController(UsersService usersService) {
+
         this.usersService = usersService;
     }
 
@@ -27,13 +30,13 @@ public class UsersController {
         model.addAttribute("registerRequest", new UsersModel());
         return "register-page";
     }
-    @PostMapping("/register")
-    public String registerNewUser(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String login, @RequestParam String password){
-        UsersModel usersModel = new UsersModel(firstName, lastName, login, password);
-        usersRepository.save(usersModel);
-        System.out.println("You have been successfully registered!");
-        return "redirect:/login";
-    }
+//    @PostMapping("/register")
+//    public String registerNewUser(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String login, @RequestParam String password){
+//        UsersModel usersModel = new UsersModel(firstName, lastName, login, password);
+//        usersService().save(usersModel);
+//        System.out.println("You have been successfully registered!");
+//        return "redirect:/login";
+//    }
 
     @GetMapping("/login")
     public String getLoginPage(){
@@ -44,11 +47,17 @@ public class UsersController {
 //        public String loginUser(@ModelAttribute User usersModel) {
 //        UsersModel authUser = usersService.authenticateUser(usersModel.getLogin(), usersModel.getPassword());
 //        if(authUser!=null){
-//            return "error_page";
+//          return "error_page";
 //        } else {
-//            return "redirect:/login";
+//           return "redirect:/login";
 //        }
-//    }
+//   }
+
+    @GetMapping("/allusers")
+    public List<UsersDTO> getAllUsers(){
+        return usersService.getAllUsers();
+    }
+
 }
 
 

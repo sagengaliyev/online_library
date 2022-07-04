@@ -1,14 +1,17 @@
 package sagengaliyev.project.online_library;
 
-import com.fasterxml.jackson.annotation.OptBoolean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sagengaliyev.project.online_library.dto.BooksDTO;
 import sagengaliyev.project.online_library.models.Book;
 import sagengaliyev.project.online_library.repository.BookRepository;
+import sagengaliyev.project.online_library.service.BooksService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,29 +21,36 @@ import java.util.Optional;
 public class BooksController {
 
     private final BookRepository bookRepo;
-
-    public BooksController(BookRepository bookRepo) {
+    private final BooksService booksService;
+    public BooksController(BookRepository bookRepo, BooksService booksService) {
         this.bookRepo = bookRepo;
+        this.booksService = booksService;
     }
 
-    @GetMapping("/books")
-    public String booksPage(Model model) {
-        List<Book> books = bookRepo.findAll();
-        model.addAttribute("books", books);
-        return "about";
-    }
-    @GetMapping("/books/{id}")
-    public String fullBookInfo(@PathVariable(value = "id") long id, Model model){
-        if(!bookRepo.existsById(id)){
-            return "redirect:/books";
-        }
+//    @GetMapping("/books")
+//    public ResponseEntity<List<Book>> booksPage() {
+//        List<Book> books = bookRepo.findAll();
+////        model.addAttribute("books", books);
+//        return new ResponseEntity<>(books, HttpStatus.OK);
+//    }
 
-        Optional<Book> book = bookRepo.findById(id);
-        ArrayList <Book> res = new ArrayList<>();
-        book.ifPresent(res::add);
-        model.addAttribute("book", res);
-        return "book-info";
+    @GetMapping("/allbooks")
+    public ResponseEntity<List<BooksDTO>> getAllBooks(){
+        return new ResponseEntity<>(booksService.getAllBooks(), HttpStatus.OK);
     }
+//    @GetMapping("/books/{id}")
+//    public ResponseEntity<String> fullBookInfo(@PathVariable(value = "id") long id, Model model){
+////        if(!bookRepo.existsById(id)){
+////            return "redirect:/books";
+////        }
+//
+//        Optional<Book> book = bookRepo.findById(id);
+//        ArrayList <Book> res = new ArrayList<>();
+//        book.ifPresent(res::add);
+//        model.addAttribute("book", res);
+//        ResponseEntity<ArrayList<Book>> arrayListResponseEntity = new ResponseEntity<>(res, HttpStatus.OK);
+//        return new ResponseEntity<>(ArrayList<book>, HttpStatus.OK);
+//    }
     @GetMapping("/books/add")
     public String addBook(Model model){
         return "add-book";
