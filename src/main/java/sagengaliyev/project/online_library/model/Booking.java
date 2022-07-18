@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import sagengaliyev.project.online_library.model.User;
 
 import java.time.LocalDate;
 
@@ -20,12 +19,17 @@ public class Booking {
     private User user;
 
     @Id
-    long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name="start_date")
-    LocalDate startDate;
+    @Column(name = "start_date")
+    private LocalDate startDate;
 
-    @Column(name="delivery_date")
-    LocalDate deliveryDate;
+    @Column(name = "delivery_date")
+    private LocalDate deliveryDate;
 
+    @Column(name="finish_date")
+    private LocalDate finishDate;
 }
+
+

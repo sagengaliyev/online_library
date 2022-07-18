@@ -17,7 +17,6 @@ public class BooksService {
     private final BookRepository booksRepo;
     private final BookMapper bookMapper;
 
-
     public List<BooksDTO> getAllBooks() {
         return booksRepo.findAll()
                 .stream()
@@ -35,6 +34,7 @@ public class BooksService {
         }
         booksRepo.deleteById(id);
     }
+
 
 
 }

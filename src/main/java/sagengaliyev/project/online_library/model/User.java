@@ -1,5 +1,10 @@
 package sagengaliyev.project.online_library.model;
 
+import ch.qos.logback.core.status.Status;
+import lombok.Data;
+
+import javax.persistence.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +12,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long userid;
+    private long id;
     @Column(name="FirstName")
     private String firstName;
     @Column(name="LastName")
@@ -16,28 +21,25 @@ public class User {
     private String login;
     @Column(name="Password")
     private String password;
-
+    @Column(name="Role")
+    private String role;
     public User() {
     }
 
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
-
-    public User(String firstName, String lastName, String login, String password) {
+    public User(long id, String firstName, String lastName, String login, String password, String role) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
+        this.role = role;
+    }
+    public long getId() {
+        return id;
     }
 
-    public long getUserid() {
-        return userid;
-    }
-
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -71,4 +73,16 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+
+
+
 }

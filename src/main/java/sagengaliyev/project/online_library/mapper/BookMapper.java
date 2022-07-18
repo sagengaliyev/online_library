@@ -15,4 +15,20 @@ public class BookMapper {
         booksDTO.setMaintext(book.getMaintext());
         return booksDTO;
     }
+
+    public Book toEntity(BooksDTO booksDTO){
+        Book books = new Book();
+        books.setId(booksDTO.getId());
+        books.setName(booksDTO.getName());
+        books.setAuthor(booksDTO.getAuthor());
+        books.setDescription(booksDTO.getDescription());
+        books.setMaintext(booksDTO.getMaintext());
+        return books;
+    }
+
+    public Book toEntityFromId(long id) {
+        Book book = new Book();
+        book.setId(id);
+        return book;
+    }
 }

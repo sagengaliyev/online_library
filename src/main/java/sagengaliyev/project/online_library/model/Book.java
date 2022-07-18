@@ -1,18 +1,19 @@
 package sagengaliyev.project.online_library.model;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name, author, description, maintext;
-
-    public Book() {}
 
     public Book(String name, String author, String description, String maintext) {
         this.name = name;
